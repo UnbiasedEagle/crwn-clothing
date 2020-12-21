@@ -69,4 +69,42 @@ const getUserDocument = async (uid) => {
 	}
 };
 
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+	//Create a collection ref for given collection key
+	const collectionRef = firestore.collection(collectionKey);
+
+	//For setting items in the collection, we will use firestore batch
+	const batch = firestore.batch();
+
+	//loop over the objects to add and then add items in the collection
+	objectsToAdd.forEach((obj) => {
+		//Creating new empty document ref
+		const newDocRef = collectionRef.doc();
+
+		batch.set(newDocRef, obj);
+	});
+
+	return await batch.commit();
+};
+
+export const convertCollectionSnapshotToMap = (collections) => {
+	const transformedCollections = collections.docs.map((doc) => {
+		const { title, items } = doc.data();
+
+		return {
+			routeName: encodeURI(title.toLowerCase()),
+			id: doc.id,
+			title,
+			items
+		};
+	});
+
+	return transformedCollections.reduce((result, current) => {
+		return {
+			...result,
+			[current.title.toLowerCase()]: current
+		};
+	}, {});
+};
+
 export default firebase;

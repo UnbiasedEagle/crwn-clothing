@@ -5,8 +5,13 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import './CollectionOverview.css';
+import Spinner from '../spinner/Spinner';
 
 const CollectionOverview = ({ collections }) => {
+	if (!collections.length) {
+		return <Spinner />;
+	}
+
 	return (
 		<div className='collections-overview'>
 			{collections.map((collection) => {
