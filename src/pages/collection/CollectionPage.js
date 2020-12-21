@@ -1,14 +1,18 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
+import { fetchCollections } from '../../redux/shop/shop-actions';
 import { selectCollection } from '../../redux/shop/shop-selector';
 import CollectionItem from '../../components/collection-item/CollectionItem';
 
 import './CollectionPage.css';
 import Spinner from '../../components/spinner/Spinner';
-import composedCollectionHoc from '../../components/collection-hoc/CollectionHoc';
 
 class CollectionPage extends React.Component {
+	componentDidMount() {
+		this.props.fetchCollections();
+	}
+
 	render() {
 		if (!this.props.collection) {
 			return <Spinner />;
@@ -41,4 +45,4 @@ const mapStateToProps = (state, props) => {
 	};
 };
 
-export default connect(mapStateToProps)(composedCollectionHoc(CollectionPage));
+export default connect(mapStateToProps, { fetchCollections })(CollectionPage);
