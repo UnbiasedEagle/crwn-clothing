@@ -1,6 +1,6 @@
 import React from 'react';
 import CollectionPreview from '../collection-preview/CollectionPreview';
-import { shopCollectionArraySelector } from '../../redux/shop/shop-selector';
+import { shopCollectionArraySelector, shopCollectionLoading } from '../../redux/shop/shop-selector';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { fetchCollections } from '../../redux/shop/shop-actions';
@@ -14,7 +14,7 @@ class CollectionOverview extends React.Component {
 	}
 
 	render() {
-		if (!this.props.collections.length) {
+		if (this.props.loading) {
 			return <Spinner />;
 		}
 
@@ -35,7 +35,8 @@ class CollectionOverview extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-	collections: shopCollectionArraySelector
+	collections: shopCollectionArraySelector,
+	loading: shopCollectionLoading
 });
 
 export default connect(mapStateToProps, { fetchCollections })(CollectionOverview);

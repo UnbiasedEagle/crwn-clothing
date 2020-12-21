@@ -9,7 +9,7 @@ const fetchCollectionStart = () => {
 
 export const fetchCollections = () => {
 	return async (dispatch, getState) => {
-		fetchCollectionStart();
+		dispatch(fetchCollectionStart());
 
 		try {
 			const collectionRef = firestore.collection('collections');

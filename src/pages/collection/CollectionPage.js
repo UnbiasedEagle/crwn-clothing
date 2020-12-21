@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import { fetchCollections } from '../../redux/shop/shop-actions';
-import { selectCollection } from '../../redux/shop/shop-selector';
+import { selectCollection, shopCollectionLoading } from '../../redux/shop/shop-selector';
 import CollectionItem from '../../components/collection-item/CollectionItem';
 
 import './CollectionPage.css';
@@ -14,7 +14,7 @@ class CollectionPage extends React.Component {
 	}
 
 	render() {
-		if (!this.props.collection) {
+		if (this.props.loading) {
 			return <Spinner />;
 		}
 
@@ -41,7 +41,8 @@ class CollectionPage extends React.Component {
 
 const mapStateToProps = (state, props) => {
 	return {
-		collection: selectCollection(props.match.params.collectionId)(state)
+		collection: selectCollection(props.match.params.collectionId)(state),
+		loading: shopCollectionLoading(state)
 	};
 };
 
