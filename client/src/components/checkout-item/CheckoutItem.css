@@ -17,17 +17,17 @@
 	height: 100%;
 }
 
-.quantity,
-.name {
+.checkout-item .quantity,
+.checkout-item .name {
 	text-align: center;
 }
 
-.price {
+.checkout-item .price {
 	text-align: right;
 	margin-right: 2.4rem;
 }
 
-.quantity {
+.checkout-item .quantity {
 	display: flex;
 	padding-left: 24px;
 	justify-content: center;
