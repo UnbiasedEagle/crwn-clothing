@@ -1,5 +1,5 @@
 .collection-item {
-	width: 22vw;
+	padding: 0 10px;
 	display: flex;
 	flex-direction: column;
 	height: 350px;
@@ -19,13 +19,9 @@
 	justify-content: space-between;
 	font-size: 18px;
 }
-.name {
-	width: 90%;
+.collection-footer .name {
+	flex: 1;
 	margin-bottom: 15px;
-}
-
-.price {
-	width: 10%;
 }
 
 .collection-item .custom-button {
@@ -45,4 +41,10 @@
 
 .collection-item:hover .image {
 	opacity: 0.8;
+}
+
+@media screen and (max-width: 768px) {
+	.collection-footer {
+		margin-bottom: 1.2rem;
+	}
 }
