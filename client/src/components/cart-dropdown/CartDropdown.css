@@ -30,3 +30,9 @@ button {
 	font-size: 18px;
 	height: 50%;
 }
+
+@media screen and (max-width: 528px) {
+	.cart-dropdown {
+		top: 135.5px;
+	}
+}
