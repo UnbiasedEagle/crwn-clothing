@@ -3,6 +3,8 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './components/header/Header';
 
+import ErrorBoundary from './components/error-boundary/ErrorBoundary';
+
 import { auth, createUserProfileDocument } from './firebase/firebase';
 
 import { connect } from 'react-redux';
@@ -43,19 +45,21 @@ class App extends React.Component {
 			<React.Fragment>
 				<Header />
 				<Switch>
-					<Suspense fallback={<Spinner />}>
-						<Route exact path='/' component={HomePage} />
-						<Route exact path='/shop' component={ShopPage} />
-						<Route
-							exact
-							path='/signin'
-							render={(props) => {
-								return this.props.user ? <Redirect to='/' /> : <SignInAndSignUp {...props} />;
-							}}
-						/>
-						<Route exact path='/checkout' component={Checkout} />
-						<Route exact path='/shop/:collectionId' component={CollectionPage} />
-					</Suspense>
+					<ErrorBoundary>
+						<Suspense fallback={<Spinner />}>
+							<Route exact path='/' component={HomePage} />
+							<Route exact path='/shop' component={ShopPage} />
+							<Route
+								exact
+								path='/signin'
+								render={(props) => {
+									return this.props.user ? <Redirect to='/' /> : <SignInAndSignUp {...props} />;
+								}}
+							/>
+							<Route exact path='/checkout' component={Checkout} />
+							<Route exact path='/shop/:collectionId' component={CollectionPage} />
+						</Suspense>
+					</ErrorBoundary>
 				</Switch>
 			</React.Fragment>
 		);
