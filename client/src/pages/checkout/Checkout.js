@@ -28,7 +28,7 @@ const Checkout = ({ cartItems, totalCartPrice }) => {
 			</div>
 			{cartItems.map((cartItem) => <CheckoutItem key={cartItem.id} item={cartItem} />)}
 			<div className='total'>
-				<span>TOTAL: &#8377;{totalCartPrice}</span>
+				<span>TOTAL: ${totalCartPrice}</span>
 			</div>
 			<div className='test-warning'>
 				*Please use the following test credit card for the payment* <br /> 4242 4242 4242 4242 - Exp: 05/2025 -
