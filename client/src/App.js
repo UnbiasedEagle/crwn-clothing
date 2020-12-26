@@ -1,12 +1,7 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './components/header/Header';
-
-import HomePage from './pages/homepage/HomePage';
-import ShopPage from './pages/shop/Shop';
-import SignInAndSignUp from './pages/sign-in-and-sign-up/SignInAndSignUp';
-import Checkout from './pages/checkout/Checkout';
 
 import { auth, createUserProfileDocument } from './firebase/firebase';
 
@@ -17,6 +12,12 @@ import { getCurrentUser } from './redux/user/user-selector';
 
 import './App.css';
 import CollectionPage from './pages/collection/CollectionPage';
+import Spinner from './components/spinner/Spinner';
+
+const HomePage = lazy(() => import('./pages/homepage/HomePage'));
+const ShopPage = lazy(() => import('./pages/shop/Shop'));
+const SignInAndSignUp = lazy(() => import('./pages/sign-in-and-sign-up/SignInAndSignUp'));
+const Checkout = lazy(() => import('./pages/checkout/Checkout'));
 
 class App extends React.Component {
 	unsubscribeFromAuh = null;
@@ -42,17 +43,19 @@ class App extends React.Component {
 			<React.Fragment>
 				<Header />
 				<Switch>
-					<Route exact path='/' component={HomePage} />
-					<Route exact path='/shop' component={ShopPage} />
-					<Route
-						exact
-						path='/signin'
-						render={(props) => {
-							return this.props.user ? <Redirect to='/' /> : <SignInAndSignUp {...props} />;
-						}}
-					/>
-					<Route exact path='/checkout' component={Checkout} />
-					<Route exact path='/shop/:collectionId' component={CollectionPage} />
+					<Suspense fallback={<Spinner />}>
+						<Route exact path='/' component={HomePage} />
+						<Route exact path='/shop' component={ShopPage} />
+						<Route
+							exact
+							path='/signin'
+							render={(props) => {
+								return this.props.user ? <Redirect to='/' /> : <SignInAndSignUp {...props} />;
+							}}
+						/>
+						<Route exact path='/checkout' component={Checkout} />
+						<Route exact path='/shop/:collectionId' component={CollectionPage} />
+					</Suspense>
 				</Switch>
 			</React.Fragment>
 		);
