@@ -10,7 +10,11 @@ dotenv.config();
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+const compression = require('compression');
+
 const app = express();
+
+app.use(compression());
 
 app.use(express.json());
 
